@@ -46,8 +46,29 @@
 
 /* USER CODE BEGIN PV */
 	char word1[] = "Hello Sako !";
-	char word2[] = "I Love You !";
-	char word3[] = "From Jasonlecson.";
+	char word2[] = "1139 Days";
+	char word3[] = "Since we've meet.";
+	char word4[] = "762 Days";
+	char word5[] = "Since we've chat.";
+	char word6[] = "72 Days";
+	char word7[] = "Fallen in love.";
+	char word8[] = "24 Hours";
+	char word9[] = "Together a Day.";
+	char word10[] = "We had quarrel";
+	char word11[] = "Never breakup";
+	char word12[] = "We had suspect";
+	char word13[] = "Never unhappy";
+	char word14[] = "I was choosen";
+	char word15[] = "only For You.";
+	char word16[] = "The shortest poe";
+	char word17[] = "m Is your name.";
+	char word18[] = "To be your hero";
+	char word19[] = "Away the Pain.";
+	char word20[] = "I know I love";
+	char word21[] = "Only You";
+	char word22[] = "   I love You";
+
+	char blank[] = "";
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -60,7 +81,7 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 	void Lcd_Init(void);
 	void Lcd_WriteData(char);
-	void printf_lcd(char *);
+	void printf_lcd(char *,char *);
 /* USER CODE END 0 */
 
 /**
@@ -93,6 +114,30 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
+		printf_lcd(word1,blank);
+		HAL_Delay(2500);
+		printf_lcd(word2,word3);
+		HAL_Delay(2500);
+		printf_lcd(word4,word5);
+		HAL_Delay(2500);
+		printf_lcd(word6,word7);
+		HAL_Delay(2500);
+		printf_lcd(word8,word9);
+		HAL_Delay(2500);
+		printf_lcd(word10,word11);
+		HAL_Delay(2500);
+		printf_lcd(word12,word13);
+		HAL_Delay(2500);
+		printf_lcd(word14,word15);
+		HAL_Delay(2500);
+		printf_lcd(word16,word17);
+		HAL_Delay(2500);
+		printf_lcd(word18,word19);
+		HAL_Delay(2500);
+		printf_lcd(word20,word21);
+		HAL_Delay(2500);
+		printf_lcd(word22,blank);
+
 	
   /* USER CODE END 2 */
 
@@ -103,20 +148,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		HAL_Delay(1500);
-		printf_lcd(word1);
-		HAL_Delay(1500);
-		printf_lcd(word2);
-		HAL_Delay(1500);
-		printf_lcd(word3);
-//	Lcd_Init();
-//	HAL_Delay(1000);
-//	int a;
-//	for(a = 0;a < 16;a++)
-//	{
-//	Lcd_WriteData('a');
-//	}
-//	HAL_Delay(1000);
+
+
 
   }
   /* USER CODE END 3 */
