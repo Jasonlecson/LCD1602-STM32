@@ -1,9 +1,10 @@
 #include "gpio.h"
-
+#include "string.h"
 
 void Lcd_Init(void);
 void Lcd_WriteCom(char com);
 void Lcd_WriteData(char data);
+void printf_lcd(char *word);
 
 void Lcd_Init()
 {
@@ -32,4 +33,12 @@ void Lcd_WriteData(char data)
 	GPIOD->ODR = data;
 	HAL_Delay(1);
 	HAL_GPIO_WritePin((GPIO_TypeDef *)GPIOG, (uint16_t) GPIO_PIN_6, (GPIO_PinState) 0); //E
+}
+
+void printf_lcd(char *word)
+{
+	Lcd_Init();
+	while(*word){
+	Lcd_WriteData(*(word++));
+	}
 }

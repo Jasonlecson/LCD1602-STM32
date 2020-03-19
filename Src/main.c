@@ -45,8 +45,9 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-char Disp[]="Hello World!";
-
+	char word1[] = "Hello Sako !";
+	char word2[] = "I Love You !";
+	char word3[] = "From Jasonlecson.";
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -59,7 +60,7 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 	void Lcd_Init(void);
 	void Lcd_WriteData(char);
-
+	void printf_lcd(char *);
 /* USER CODE END 0 */
 
 /**
@@ -92,12 +93,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-	Lcd_Init();
-	int a;
-	for(a = 0;a < strlen(Disp);a++)
-	{
-	Lcd_WriteData(Disp[a]);
-	}
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -107,6 +103,20 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		HAL_Delay(1500);
+		printf_lcd(word1);
+		HAL_Delay(1500);
+		printf_lcd(word2);
+		HAL_Delay(1500);
+		printf_lcd(word3);
+//	Lcd_Init();
+//	HAL_Delay(1000);
+//	int a;
+//	for(a = 0;a < 16;a++)
+//	{
+//	Lcd_WriteData('a');
+//	}
+//	HAL_Delay(1000);
 
   }
   /* USER CODE END 3 */
