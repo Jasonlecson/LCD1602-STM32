@@ -20,11 +20,12 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "rtc.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "string.h"
+
 
 /* USER CODE END Includes */
 
@@ -67,8 +68,10 @@
 	char word20[] = "I know I love";
 	char word21[] = "Only You";
 	char word22[] = "   I love You";
-
 	char blank[] = "";
+	RTC_DateTypeDef sdatestructure;
+	RTC_TimeTypeDef stimestructure;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -81,7 +84,10 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 	void Lcd_Init(void);
 	void Lcd_WriteData(char);
-	void printf_lcd(char *,char *);
+	void printf_lcd_words(char *,char *);
+	void ReadTime(void);
+	void printf_lcd_time(char *,char *,char *,char *,char *,char *);
+	char* Int2String(int,char *);
 /* USER CODE END 0 */
 
 /**
@@ -113,32 +119,37 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_RTC_Init();
   /* USER CODE BEGIN 2 */
-		printf_lcd(word1,blank);
-		HAL_Delay(2500);
-		printf_lcd(word2,word3);
-		HAL_Delay(2500);
-		printf_lcd(word4,word5);
-		HAL_Delay(2500);
-		printf_lcd(word6,word7);
-		HAL_Delay(2500);
-		printf_lcd(word8,word9);
-		HAL_Delay(2500);
-		printf_lcd(word10,word11);
-		HAL_Delay(2500);
-		printf_lcd(word12,word13);
-		HAL_Delay(2500);
-		printf_lcd(word14,word15);
-		HAL_Delay(2500);
-		printf_lcd(word16,word17);
-		HAL_Delay(2500);
-		printf_lcd(word18,word19);
-		HAL_Delay(2500);
-		printf_lcd(word20,word21);
-		HAL_Delay(2500);
-		printf_lcd(word22,blank);
 
-	
+	char Y[5],M[2],D[2],H[2],Min[2],Sec[2];
+
+//	char time[] = {(2000+sdatestructure.Year), sdatestructure.Month, sdatestructure.Date,
+//								stimestructure.Hours, stimestructure.Minutes, stimestructure.Seconds};
+//	printf_lcd_words(word1,blank);
+//	HAL_Delay(2500);
+//	printf_lcd_words(word2,word3);
+//	HAL_Delay(2500);
+//	printf_lcd_words(word4,word5);
+//	HAL_Delay(2500);
+//	printf_lcd_words(word6,word7);
+//	HAL_Delay(2500);
+//	printf_lcd_words(word8,word9);
+//	HAL_Delay(2500);
+//	printf_lcd_words(word10,word11);
+//	HAL_Delay(2500);
+//	printf_lcd_words(word12,word13);
+//	HAL_Delay(2500);
+//	printf_lcd_words(word14,word15);
+//	HAL_Delay(2500);
+//	printf_lcd_words(word16,word17);
+//	HAL_Delay(2500);
+//	printf_lcd_words(word18,word19);
+//	HAL_Delay(2500);
+//	printf_lcd_words(word20,word21);
+//	HAL_Delay(2500);
+//	printf_lcd_words(word22,blank);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -148,7 +159,16 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
+		
+		ReadTime();
+		Int2String((2000+sdatestructure.Year),Y);
+		Int2String(sdatestructure.Month,M);
+		Int2String(sdatestructure.Date,D);
+		Int2String(stimestructure.Hours,H);
+		Int2String(stimestructure.Minutes,Min);
+		Int2String(stimestructure.Seconds,Sec);
+		HAL_Delay(1000);
+		printf_lcd_time(Y,M,D,H,Min,Sec);
 
 
   }
@@ -163,12 +183,14 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Initializes the CPU, AHB and APB busses clocks 
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI_DIV2;
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL16;
@@ -189,6 +211,13 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC;
+  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  HAL_RCC_MCOConfig(RCC_MCO, RCC_MCO1SOURCE_PLLCLK, RCC_MCODIV_1);
 }
 
 /* USER CODE BEGIN 4 */
