@@ -68,7 +68,9 @@
 	char word20[] = "I know I love";
 	char word21[] = "Only You";
 	char word22[] = "   I love You";
-	char blank[] = "";
+	char blank[] = " ";
+	char colon[] = ":";
+	char line[] = "/";
 	RTC_DateTypeDef sdatestructure;
 	RTC_TimeTypeDef stimestructure;
 
@@ -85,8 +87,8 @@ void SystemClock_Config(void);
 	void Lcd_Init(void);
 	void Lcd_WriteData(char);
 	void printf_lcd_words(char *,char *);
-	void ReadTime(void);
-	void printf_lcd_time(char *,char *,char *,char *,char *,char *);
+	void ReadTime(char *,char *,char *,char *,char *,char *);
+	void printf_lcd_time(char *,char *,char *,char *,char *,char *,char *,char *,char *,char *,char *);
 	char* Int2String(int,char *);
 /* USER CODE END 0 */
 
@@ -149,7 +151,6 @@ int main(void)
 //	printf_lcd_words(word20,word21);
 //	HAL_Delay(2500);
 //	printf_lcd_words(word22,blank);
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -159,16 +160,12 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		
-		ReadTime();
-		Int2String((2000+sdatestructure.Year),Y);
-		Int2String(sdatestructure.Month,M);
-		Int2String(sdatestructure.Date,D);
-		Int2String(stimestructure.Hours,H);
-		Int2String(stimestructure.Minutes,Min);
-		Int2String(stimestructure.Seconds,Sec);
 		HAL_Delay(1000);
-		printf_lcd_time(Y,M,D,H,Min,Sec);
+//		printf_lcd_words(word22,blank);
+
+		
+		ReadTime(Y,M,D,H,Min,Sec);
+		printf_lcd_time(Y,line,M,line,D,blank,H,colon,Min,colon,Sec);
 
 
   }
@@ -187,10 +184,10 @@ void SystemClock_Config(void)
 
   /** Initializes the CPU, AHB and APB busses clocks 
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSE;
+  RCC_OscInitStruct.LSEState = RCC_LSE_ON;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI_DIV2;
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL16;
@@ -212,12 +209,11 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC;
-  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
+  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
   }
-  HAL_RCC_MCOConfig(RCC_MCO, RCC_MCO1SOURCE_PLLCLK, RCC_MCODIV_1);
 }
 
 /* USER CODE BEGIN 4 */

@@ -5,7 +5,7 @@ void Lcd_Init(void);
 void Lcd_WriteCom(char com);
 void Lcd_WriteData(char data);
 void printf_lcd_words(char *word1st,char *word2nd);
-void printf_lcd_time(char *Y,char *M,char *D,char *H,char *Min,char *Sec);
+void printf_lcd_time(char *Y,char *A,char *M,char *B,char *D,char *blank,char *H,char *C,char *Min,char *E,char *Sec);
 void Write_First(void);
 void Write_Second(void);
 
@@ -60,24 +60,39 @@ void printf_lcd_words(char *word1st,char *word2nd)
 	}
 }
 
-void printf_lcd_time(char *Y,char *M,char *D,char *H,char *Min,char *Sec)
+void printf_lcd_time(char *Y,char *A,char *M,char *B,char *D,char *blank,char *H,char *C,char *Min,char *E,char *Sec)
 {
 	Lcd_Init();
-	Write_First();
+	Write_Second();
 	while(*Y){
 	Lcd_WriteData(*(Y++));
+	}
+	while(*A){
+	Lcd_WriteData(*(A++));
 	}
 	while(*M){
 	Lcd_WriteData(*(M++));
 	}
+	while(*B){
+	Lcd_WriteData(*(B++));
+	}
 	while(*D){
 	Lcd_WriteData(*(D++));
+	}
+	while(*blank){
+	Lcd_WriteData(*(blank++));
 	}
 	while(*H){
 	Lcd_WriteData(*(H++));
 	}
+	while(*C){
+	Lcd_WriteData(*(C++));
+	}
 	while(*Min){
 	Lcd_WriteData(*(Min++));
+	}
+	while(*E){
+	Lcd_WriteData(*(E++));
 	}
 	while(*Sec){
 	Lcd_WriteData(*(Sec++));
