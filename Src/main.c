@@ -68,6 +68,7 @@
 	char word20[] = "I know I love";
 	char word21[] = "Only You";
 	char word22[] = "   I love You";
+	char word23[] = "3 thousand times";
 	char blank[] = " ";
 	char colon[] = ":";
 	char line[] = "/";
@@ -88,7 +89,7 @@ void SystemClock_Config(void);
 	void Lcd_WriteData(char);
 	void printf_lcd_words(char *,char *);
 	void ReadTime(char *,char *,char *,char *,char *,char *);
-	void printf_lcd_time(char *,char *,char *,char *,char *,char *,char *,char *,char *,char *,char *);
+	void printf_lcd_time(char *,char *,char *,char *,char *,char *,char *,char *,char *,char *,char *,char *);
 	char* Int2String(int,char *);
 /* USER CODE END 0 */
 
@@ -128,29 +129,30 @@ int main(void)
 
 //	char time[] = {(2000+sdatestructure.Year), sdatestructure.Month, sdatestructure.Date,
 //								stimestructure.Hours, stimestructure.Minutes, stimestructure.Seconds};
-//	printf_lcd_words(word1,blank);
-//	HAL_Delay(2500);
-//	printf_lcd_words(word2,word3);
-//	HAL_Delay(2500);
-//	printf_lcd_words(word4,word5);
-//	HAL_Delay(2500);
-//	printf_lcd_words(word6,word7);
-//	HAL_Delay(2500);
-//	printf_lcd_words(word8,word9);
-//	HAL_Delay(2500);
-//	printf_lcd_words(word10,word11);
-//	HAL_Delay(2500);
-//	printf_lcd_words(word12,word13);
-//	HAL_Delay(2500);
-//	printf_lcd_words(word14,word15);
-//	HAL_Delay(2500);
-//	printf_lcd_words(word16,word17);
-//	HAL_Delay(2500);
-//	printf_lcd_words(word18,word19);
-//	HAL_Delay(2500);
-//	printf_lcd_words(word20,word21);
-//	HAL_Delay(2500);
-//	printf_lcd_words(word22,blank);
+	printf_lcd_words(word1,blank);
+	HAL_Delay(2500);
+	printf_lcd_words(word2,word3);
+	HAL_Delay(2500);
+	printf_lcd_words(word4,word5);
+	HAL_Delay(2500);
+	printf_lcd_words(word6,word7);
+	HAL_Delay(2500);
+	printf_lcd_words(word8,word9);
+	HAL_Delay(2500);
+	printf_lcd_words(word10,word11);
+	HAL_Delay(2500);
+	printf_lcd_words(word12,word13);
+	HAL_Delay(2500);
+	printf_lcd_words(word14,word15);
+	HAL_Delay(2500);
+	printf_lcd_words(word16,word17);
+	HAL_Delay(2500);
+	printf_lcd_words(word18,word19);
+	HAL_Delay(2500);
+	printf_lcd_words(word20,word21);
+	HAL_Delay(2500);
+	printf_lcd_words(word22,word23);
+	HAL_Delay(1500);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -161,11 +163,9 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 		HAL_Delay(1000);
-//		printf_lcd_words(word22,blank);
-
 		
 		ReadTime(Y,M,D,H,Min,Sec);
-		printf_lcd_time(Y,line,M,line,D,blank,H,colon,Min,colon,Sec);
+		printf_lcd_time(word22,Y,line,M,line,D,blank,H,colon,Min,colon,Sec);
 
 
   }
